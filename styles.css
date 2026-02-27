@@ -1,0 +1,34 @@
+/* 隐藏文件的标记样式 */
+.hide-files-hidden {
+    opacity: 0.5;
+}
+
+/* 右键菜单图标 */
+.hide-files-menu-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* 设置页面列表 */
+.hide-files-setting-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+.hide-files-setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    margin: 4px 0;
+    background-color: var(--background-secondary);
+    border-radius: 4px;
+}
+
+.hide-files-setting-item button {
+    margin-left: 8px;
+}

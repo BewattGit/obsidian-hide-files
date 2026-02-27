@@ -1,0 +1,338 @@
+# Hide Files 插件 - GitHub 发布操作指南
+
+> 作者：Bewatt
+> 创建日期：2026-02-26
+> 版本：1.0
+
+---
+
+## 📁 本文件夹文件说明
+
+```
+M:\github-hide-files\
+├── .github/
+│   └── workflows/
+│       └── release.yml          ← GitHub Actions 自动构建配置
+├── src/
+│   ├── main.ts                  ← 插件主入口代码
+│   ├── settings.ts              ← 设置页面代码
+│   ├── commands.ts              ← 命令注册代码
+│   └── utils.ts                 ← 工具函数代码
+├── LICENSE                      ← MIT 开源许可证
+├── README.md                    ← 中文版项目说明
+├── README_EN.md                 ← 英文版项目说明
+├── .gitignore                   ← Git 忽略文件配置
+├── manifest.json                ← 插件元数据（版本、作者、描述）
+├── package.json                 ← npm 依赖配置
+├── tsconfig.json                ← TypeScript 配置
+├── esbuild.config.mjs           ← 构建工具配置
+└── styles.css                   ← 插件样式文件
+```
+
+---
+
+## 📋 发布流程总览
+
+### 阶段一：上传到 GitHub（约 15 分钟）
+1. 创建 GitHub 仓库
+2. 上传代码
+3. 发布 Release
+
+### 阶段二：提交到 Obsidian 社区市场（约 10 分钟）
+1. Fork obsidian-releases 仓库
+2. 修改配置文件
+3. 提交 Pull Request
+
+### 阶段三：等待审核（1-2 周）
+- Obsidian 团队审核代码
+- 审核通过后上线
+
+---
+
+## 🚀 阶段一：上传到 GitHub
+
+### 步骤 1：登录 GitHub
+
+访问：https://github.com/login
+
+---
+
+### 步骤 2：创建新仓库
+
+1. 点击右上角 **+** 按钮
+2. 选择 **New repository**
+3. 填写以下信息：
+
+| 字段 | 填写内容 |
+|------|---------|
+| Repository name | `obsidian-hide-files` |
+| Description | `Hide files and folders in Obsidian's file explorer` |
+| Visibility | ✅ Public（公开） |
+| Initialize with README | ❌ 不要勾选 |
+
+4. 点击 **Create repository**
+
+---
+
+### 步骤 3：上传代码到 GitHub
+
+#### 方法 A：使用 GitHub Desktop（推荐新手）
+
+1. 下载并安装 GitHub Desktop：https://desktop.github.com/
+2. 打开 GitHub Desktop，登录你的 GitHub 账号
+3. 点击 **File** → **Add local repository**
+4. 选择文件夹：`M:\github-hide-files`
+5. 点击 **Commit to main**
+6. 点击 **Publish repository**
+7. 确认仓库名是 `obsidian-hide-files`
+8. 点击 **Publish repository**
+
+#### 方法 B：使用命令行（如果你熟悉 Git）
+
+打开终端（PowerShell 或 Git Bash），依次执行：
+
+```bash
+cd M:\github-hide-files
+
+# 初始化 Git 仓库
+git init
+
+# 添加所有文件
+git add .
+
+# 提交
+git commit -m "Initial release: Hide Files plugin v1.0.0"
+
+# 设置主分支
+git branch -M main
+
+# 关联远程仓库（替换 Bewatt 为你的 GitHub 用户名）
+git remote add origin https://github.com/Bewatt/obsidian-hide-files.git
+
+# 上传
+git push -u origin main
+```
+
+---
+
+### 步骤 4：发布第一个 Release
+
+1. 在你的仓库页面，点击 **Releases** 标签
+2. 点击 **Create a new release**
+3. 填写以下信息：
+
+| 字段 | 填写内容 |
+|------|---------|
+| Tag version | `v1.0.0` |
+| Release title | `v1.0.0 - Initial Release` |
+| Description | 可以勾选 "Generate release notes" 自动生成 |
+
+4. 点击 **Publish release**
+
+---
+
+### 步骤 5：验证自动构建
+
+1. 点击仓库的 **Actions** 标签
+2. 应该能看到一个正在运行的 workflow
+3. 等待完成（绿色勾表示成功）
+
+自动构建完成后，你的 Release 里会自动包含：
+- `main.js`（编译后的插件）
+- `manifest.json`
+- `styles.css`
+
+---
+
+## 📦 阶段二：提交到 Obsidian 社区插件市场
+
+### 步骤 1：访问 obsidian-releases 仓库
+
+https://github.com/obsidianmd/obsidian-releases
+
+---
+
+### 步骤 2：Fork 仓库
+
+1. 点击右上角 **Fork** 按钮
+2. 等待 Fork 完成
+3. 你会跳转到你的 Fork 版本：`你的用户名/obsidian-releases`
+
+---
+
+### 步骤 3：修改 community-plugins.json
+
+1. 在你的 Fork 仓库中，找到 `community-plugins.json` 文件
+2. 点击 **Edit**（铅笔图标）
+3. 在数组末尾添加你的插件信息：
+
+```json
+{
+  "id": "hide-files",
+  "name": "Hide Files",
+  "author": "Bewatt",
+  "description": "Hide files and folders in the file explorer",
+  "repo": "Bewatt/obsidian-hide-files"
+}
+```
+
+**注意：** 将 `Bewatt` 替换为你的实际 GitHub 用户名！
+
+4. 滚动到页面底部，填写 Commit 信息：
+
+| 字段 | 填写内容 |
+|------|---------|
+| Commit message | `Add Hide Files plugin to community plugins` |
+| Description | `Plugin for hiding files and folders in Obsidian file explorer` |
+
+5. 选择 **Create a new branch for this commit**
+6. 点击 **Propose changes**
+
+---
+
+### 步骤 4：创建 Pull Request
+
+1. 点击 **Create pull request**
+2. 填写 PR 信息：
+
+**Title:**
+```
+Add Hide Files plugin
+```
+
+**Description:**
+```markdown
+## Plugin Info
+
+- **Plugin Name:** Hide Files
+- **Repository:** https://github.com/Bewatt/obsidian-hide-files
+- **Author:** Bewatt
+
+## Description
+
+Hide files and folders in Obsidian's file explorer with a simple right-click.
+
+## Checklist
+
+- [x] The plugin is released on GitHub
+- [x] The repository has a valid LICENSE
+- [x] The README.md contains usage instructions
+- [x] I agree to follow the Obsidian plugin guidelines
+```
+
+3. 点击 **Create pull request**
+
+---
+
+## ⏳ 阶段三：等待审核
+
+### 审核流程
+
+1. **自动检查**（几分钟）
+   - GitHub Actions 会检查你的配置是否正确
+
+2. **人工审核**（1-2 周）
+   - Obsidian 团队会检查代码安全性
+   - 确保没有恶意功能
+
+3. **审核通过**
+   - PR 会被合并
+   - 你的插件出现在社区市场
+
+### 审核不通过怎么办？
+
+如果审核人员提出修改意见：
+1. 按照意见修改代码
+2. 在你的 Fork 仓库提交修改
+3. PR 会自动更新
+4. 重新等待审核
+
+---
+
+## 📍 当前状态检查清单
+
+### 上传到 GitHub 前
+- [ ] 所有文件在 `M:\github-hide-files` 文件夹中
+- [ ] 已检查 `manifest.json` 中的作者名是 "Bewatt"
+- [ ] 已检查 `README.md` 内容正确
+
+### 上传到 GitHub 后
+- [ ] GitHub 仓库已创建
+- [ ] 代码已上传
+- [ ] v1.0.0 Release 已发布
+- [ ] Actions 构建成功（绿色勾）
+
+### 提交社区市场后
+- [ ] Fork 了 obsidian-releases 仓库
+- [ ] 修改了 community-plugins.json
+- [ ] 创建了 Pull Request
+- [ ] 等待审核中...
+
+---
+
+## 🆘 常见问题
+
+### Q1: Git 命令报错怎么办？
+**A:** 检查是否安装了 Git：https://git-scm.com/download
+
+### Q2: 仓库名可以改吗？
+**A:** 可以，但 `manifest.json` 中的 `id` 不能改。
+
+### Q3: 提交后能修改吗？
+**A:** 可以！继续提交代码并 push，GitHub 会自动更新。
+
+### Q4: 审核需要多久？
+**A:** 通常 1-2 周，有时更快。
+
+### Q5: 审核期间用户能安装吗？
+**A:** 可以！用户可以通过以下方式安装：
+- BRAT 插件
+- 手动下载 Release 安装
+
+---
+
+## 🔗 相关链接
+
+| 资源 | 链接 |
+|------|------|
+| GitHub | https://github.com |
+| Obsidian 插件开发文档 | https://docs.obsidian.md/ |
+| obsidian-releases 仓库 | https://github.com/obsidianmd/obsidian-releases |
+| BRAT 插件 | https://github.com/TfTHacker/obsidian42-brat |
+
+---
+
+## 📝 明日操作步骤（快速参考）
+
+### 第一部分：上传 GitHub（15 分钟）
+
+```
+1. 登录 GitHub
+2. 创建仓库：obsidian-hide-files
+3. 复制终端命令上传代码
+4. 发布 Release v1.0.0
+5. 检查 Actions 构建状态
+```
+
+### 第二部分：提交社区市场（10 分钟）
+
+```
+1. Fork obsidian-releases
+2. 编辑 community-plugins.json
+3. 提交修改
+4. 创建 Pull Request
+5. 等待审核通知
+```
+
+---
+
+## ✅ 完成后
+
+发布成功后，用户可以在 Obsidian 中：
+- 设置 → 第三方插件 → 浏览 → 搜索 "Hide Files" → 安装
+
+---
+
+**祝你发布顺利！** 🎉
+
+如有问题，可以在 GitHub Issues 中询问。
