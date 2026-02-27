@@ -101,37 +101,6 @@ In **Settings → Hide Files**:
 
 ---
 
-## 🐛 Bug Reports & Feature Requests
-
-Found a bug or have a feature request?
-
-- Submit an issue on [GitHub Issues](https://github.com/Bewatt/obsidian-hide-files/issues)
-- Join the discussion on [GitHub Discussions](https://github.com/Bewatt/obsidian-hide-files/discussions)
-
----
-
-## 🤝 Contributing
-
-Issues and Pull Requests are welcome!
-
-### Local Development
-
-```bash
-# Clone the repository
-git clone https://github.com/Bewatt/obsidian-hide-files.git
-
-# Install dependencies
-npm install
-
-# Development mode (watch for changes)
-npm run dev
-
-# Production build
-npm run build
-```
-
----
-
 ## 📜 License
 
 MIT License - See [LICENSE](LICENSE) file for details
