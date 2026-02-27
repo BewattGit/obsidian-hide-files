@@ -2,10 +2,6 @@
 
 通过简单的右键点击，在 Obsidian 的文件浏览器中隐藏文件和文件夹。
 
-![GitHub Release](https://img.shields.io/github/v/release/Bewatt/obsidian-hide-files)
-![Obsidian Downloads](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=%23483699&label=downloads&query=%24%5B%22hide-files%22%5D.downloads&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json)
-![License](https://img.shields.io/github/license/Bewatt/obsidian-hide-files)
-
 ---
 
 ## ✨ 功能特性
