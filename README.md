@@ -101,37 +101,6 @@
 
 ---
 
-## 🐛 问题反馈
-
-遇到问题或有功能建议？
-
-- 在 [GitHub Issues](https://github.com/Bewatt/obsidian-hide-files/issues) 提交问题
-- 在 [GitHub Discussions](https://github.com/Bewatt/obsidian-hide-files/discussions) 参与讨论
-
----
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
-### 本地开发
-
-```bash
-# 克隆仓库
-git clone https://github.com/Bewatt/obsidian-hide-files.git
-
-# 安装依赖
-npm install
-
-# 开发模式（监听文件变化）
-npm run dev
-
-# 生产构建
-npm run build
-```
-
----
-
 ## 📜 许可证
 
 MIT License - 详见 [LICENSE](LICENSE) 文件
