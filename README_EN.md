@@ -2,10 +2,6 @@
 
 Hide files and folders in Obsidian's file explorer with a simple right-click.
 
-![GitHub Release](https://img.shields.io/github/v/release/Bewatt/obsidian-hide-files)
-![Obsidian Downloads](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=%23483699&label=downloads&query=%24%5B%22hide-files%22%5D.downloads&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json)
-![License](https://img.shields.io/github/license/Bewatt/obsidian-hide-files)
-
 ---
 
 ## ✨ Features
@@ -102,37 +98,6 @@ In **Settings → Hide Files**:
 | Author | Bewatt |
 | License | MIT |
 | Source Code | [GitHub](https://github.com/Bewatt/obsidian-hide-files) |
-
----
-
-## 🐛 Bug Reports & Feature Requests
-
-Found a bug or have a feature request?
-
-- Submit an issue on [GitHub Issues](https://github.com/Bewatt/obsidian-hide-files/issues)
-- Join the discussion on [GitHub Discussions](https://github.com/Bewatt/obsidian-hide-files/discussions)
-
----
-
-## 🤝 Contributing
-
-Issues and Pull Requests are welcome!
-
-### Local Development
-
-```bash
-# Clone the repository
-git clone https://github.com/Bewatt/obsidian-hide-files.git
-
-# Install dependencies
-npm install
-
-# Development mode (watch for changes)
-npm run dev
-
-# Production build
-npm run build
-```
 
 ---
 
