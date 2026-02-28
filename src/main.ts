@@ -1,4 +1,4 @@
-import { App, Plugin, PluginSettingTab, Setting, TAbstractFile, TFolder } from 'obsidian';
+import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
 // 插件配置接口
 interface HideFilesPluginSettings {
@@ -24,11 +24,11 @@ export default class HideFilesPlugin extends Plugin {
                     const isHidden = this.settings.hiddenList.includes(file.path);
 
                     if (isHidden) {
-                        item.setTitle('显示')
+                        item.setTitle('Show')
                             .setIcon('eye')
                             .onClick(() => this.unhidePath(file.path));
                     } else {
-                        item.setTitle('隐藏')
+                        item.setTitle('Hide')
                             .setIcon('eye-off')
                             .onClick(() => this.hidePath(file.path));
                     }
@@ -46,14 +46,14 @@ export default class HideFilesPlugin extends Plugin {
         });
 
         // 添加侧边栏图标
-        this.addRibbonIcon('eye-off', '切换隐藏文件显示', () => {
+        this.addRibbonIcon('eye-off', 'Toggle hidden files', () => {
             this.toggleVisibility();
         });
 
         // 添加命令
         this.addCommand({
             id: 'toggle-visibility',
-            name: '切换隐藏文件可见性',
+            name: 'Toggle hidden files visibility',
             callback: () => this.toggleVisibility(),
         });
 
@@ -62,21 +62,21 @@ export default class HideFilesPlugin extends Plugin {
     }
 
     // 隐藏文件/文件夹
-    hidePath(path: string) {
+    async hidePath(path: string) {
         if (!this.settings.hiddenList.includes(path)) {
             this.settings.hiddenList.push(path);
             this.changePathVisibility(path, this.settings.hidden);
-            this.saveSettings();
+            await this.saveSettings();
         }
     }
 
     // 取消隐藏
-    unhidePath(path: string) {
+    async unhidePath(path: string) {
         const index = this.settings.hiddenList.indexOf(path);
         if (index > -1) {
             this.settings.hiddenList.splice(index, 1);
             this.changePathVisibility(path, false);
-            this.saveSettings();
+            await this.saveSettings();
         }
     }
 
@@ -94,9 +94,9 @@ export default class HideFilesPlugin extends Plugin {
     }
 
     // 切换显示/隐藏状态
-    toggleVisibility() {
+    async toggleVisibility() {
         this.settings.hidden = !this.settings.hidden;
-        this.saveSettings();
+        await this.saveSettings();
 
         // 更新 ribbon 图标
         this.updateRibbonIcon();
@@ -109,11 +109,11 @@ export default class HideFilesPlugin extends Plugin {
 
     // 更新 ribbon 图标
     updateRibbonIcon() {
-        const iconEl = document.querySelector('.workspace-ribbon .clickable-icon[aria-label*="隐藏"]');
+        const iconEl = document.querySelector('.workspace-ribbon .clickable-icon[aria-label*="Toggle hidden"]');
         if (!iconEl) return;
 
         const iconName = this.settings.hidden ? 'eye-off' : 'eye';
-        const tooltipText = this.settings.hidden ? '显示隐藏的文件' : '隐藏文件';
+        const tooltipText = this.settings.hidden ? 'Show hidden files' : 'Hide files';
 
         // 获取 lucide 图标 SVG
         const iconMap: Record<string, string> = {

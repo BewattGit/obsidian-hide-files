@@ -52,7 +52,7 @@ export function shouldHideFile(path: string, hiddenList: string[]): boolean {
  * 防抖函数
  * 用于处理大量文件时的性能优化
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
     func: T,
     wait: number
 ): (...args: Parameters<T>) => void {
