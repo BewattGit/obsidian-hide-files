@@ -27,11 +27,11 @@ export default class HideFilesPlugin extends Plugin {
                     if (isHidden) {
                         item.setTitle('Show')
                             .setIcon('eye')
-                            .onClick(() => this.unhidePath(file.path));
+                            .onClick(async () => await this.unhidePath(file.path));
                     } else {
                         item.setTitle('Hide')
                             .setIcon('eye-off')
-                            .onClick(() => this.hidePath(file.path));
+                            .onClick(async () => await this.hidePath(file.path));
                     }
                 });
             })
@@ -45,15 +45,15 @@ export default class HideFilesPlugin extends Plugin {
         });
 
         // 添加侧边栏图标
-        this.addRibbonIcon('eye-off', 'Toggle hidden files', () => {
-            this.toggleVisibility();
+        this.addRibbonIcon('eye-off', 'Toggle hidden files', async () => {
+            await this.toggleVisibility();
         });
 
         // 添加命令
         this.addCommand({
             id: 'toggle-visibility',
             name: 'Toggle hidden files visibility',
-            callback: () => this.toggleVisibility(),
+            callback: async () => await this.toggleVisibility(),
         });
 
         // 添加设置页面
@@ -226,7 +226,7 @@ class HideFilesSettingTab extends PluginSettingTab {
 
         // 隐藏列表管理
         new Setting(containerEl)
-            .setName('Hidden Files List')
+            .setName('Hidden files list')
             .setDesc('Files and folders currently hidden')
             .addTextArea((text) =>
                 text
@@ -242,11 +242,11 @@ class HideFilesSettingTab extends PluginSettingTab {
 
         // 清空按钮
         new Setting(containerEl)
-            .setName('Clear All')
+            .setName('Clear all')
             .setDesc('Remove all hidden files')
             .addButton((button) =>
                 button
-                    .setButtonText('Clear Hidden List')
+                    .setButtonText('Clear hidden list')
                     .setCta()
                     .onClick(async () => {
                         this.plugin.settings.hiddenList = [];
