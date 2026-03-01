@@ -13,6 +13,7 @@ const DEFAULT_SETTINGS: HideFilesPluginSettings = {
 
 export default class HideFilesPlugin extends Plugin {
     settings: HideFilesPluginSettings;
+    private observer: MutationObserver | null = null;
 
     async onload() {
         await this.loadSettings();
@@ -36,13 +37,11 @@ export default class HideFilesPlugin extends Plugin {
             })
         );
 
-        // 初始化隐藏状态
+        // 初始化隐藏状态 - 使用 MutationObserver 监听文件浏览器 DOM 变化
         this.app.workspace.onLayoutReady(() => {
-            setTimeout(() => {
-                for (const path of this.settings.hiddenList) {
-                    this.changePathVisibility(path, this.settings.hidden);
-                }
-            }, 200);
+            this.setupFileExplorerObserver();
+            // 立即处理已存在的节点
+            this.applyHiddenStateToExistingFiles();
         });
 
         // 添加侧边栏图标
@@ -93,6 +92,65 @@ export default class HideFilesPlugin extends Plugin {
         }
     }
 
+    // 设置文件浏览器 DOM 观察器
+    setupFileExplorerObserver() {
+        // 先断开已有的观察器
+        if (this.observer) {
+            this.observer.disconnect();
+        }
+
+        // 查找文件浏览器容器
+        const fileExplorer = document.querySelector('.nav-files-container');
+        if (!fileExplorer) return;
+
+        // 创建观察器
+        this.observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.addedNodes.length > 0) {
+                    this.handleNewNodes(mutation.addedNodes);
+                }
+            }
+        });
+
+        // 开始观察
+        this.observer.observe(fileExplorer, {
+            childList: true,
+            subtree: true,
+        });
+    }
+
+    // 处理新添加的节点
+    handleNewNodes(nodes: NodeList) {
+        nodes.forEach((node) => {
+            if (node instanceof HTMLElement) {
+                // 检查节点本身是否有 data-path 属性
+                const path = node.getAttribute('data-path');
+                if (path && this.settings.hiddenList.includes(path)) {
+                    this.changePathVisibility(path, this.settings.hidden);
+                }
+
+                // 检查子节点
+                const children = node.querySelectorAll('[data-path]');
+                children.forEach((child) => {
+                    const childPath = child.getAttribute('data-path');
+                    if (childPath && this.settings.hiddenList.includes(childPath)) {
+                        this.changePathVisibility(childPath, this.settings.hidden);
+                    }
+                });
+            }
+        });
+    }
+
+    // 对已存在的文件应用隐藏状态
+    applyHiddenStateToExistingFiles() {
+        // 使用 requestAnimationFrame 确保 DOM 已渲染
+        requestAnimationFrame(() => {
+            for (const path of this.settings.hiddenList) {
+                this.changePathVisibility(path, this.settings.hidden);
+            }
+        });
+    }
+
     // 切换显示/隐藏状态
     async toggleVisibility() {
         this.settings.hidden = !this.settings.hidden;
@@ -140,6 +198,12 @@ export default class HideFilesPlugin extends Plugin {
     }
 
     onunload() {
+        // 断开观察器
+        if (this.observer) {
+            this.observer.disconnect();
+            this.observer = null;
+        }
+
         // 清理：恢复所有隐藏文件的显示
         for (const path of this.settings.hiddenList) {
             this.changePathVisibility(path, false);
